@@ -1,10 +1,11 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link,useNavigate } from "react-router-dom"
 
 export default function SignUp() {
   const [formData,setFormData] = useState({})
   const [error,setError]=useState(null)
   const [loading,setLoading]=useState(false)
+  const navigate = useNavigate()
   const handleChange=(e)=>{
     //to keep the previous data and append the data as we enter data 
     setFormData({...formData,[e.target.id]:e.target.value})
@@ -28,6 +29,7 @@ export default function SignUp() {
         setError(true)
         return;
       }
+      navigate('/sign-in')
     } catch (error) {
       setLoading(false)
       setError(true)
@@ -41,12 +43,12 @@ export default function SignUp() {
         text" placeholder="Username" id='username' className="bg-slate-100 p-3 rounded-lg" onChange={handleChange}/>
         <input type="email" placeholder="Email" id='email' className="bg-slate-100 p-3 rounded-lg"onChange={handleChange}/>    
         <input type="password" placeholder="Password" id='password' className="bg-slate-100 p-3 rounded-lg"onChange={handleChange}/>
-        <button disabled={loading} className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80" >Sign Up</button>
+        <button disabled={loading} className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80" >{loading?'Loading ...':'Sign Up'}</button>
       </form>
       <div className="flex gap-2 mt-5">
         <p>Have an Account?</p>
         <Link to='/sign-in'>
-        <span className="text-blue-500">{loading?'Loading ...':'Sign Up'}</span>
+        <span className="text-blue-500">Sign In</span>
         </Link>
       </div>
       <p className="text-red-700 mt-5">{error && "Something Went Wrong"}</p>
